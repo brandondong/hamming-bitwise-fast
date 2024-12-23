@@ -25,14 +25,31 @@ fn bench_hamming(c: &mut Criterion) {
             distance_bench(|x, y| hamming_bitwise_fast(x, y) as u64),
         );
         group.bench_with_input(
+            BenchmarkId::new("hamming-bitwise-fast_64", size),
+            &size,
+            distance_bench(|x, y| hamming_bitwise_fast_64(x, y)),
+        );
+
+        group.bench_with_input(
             BenchmarkId::new("naive", size),
             &size,
             distance_bench(naive_hamming_distance),
         );
         group.bench_with_input(
+            BenchmarkId::new("naive_64", size),
+            &size,
+            distance_bench(naive_hamming_distance_64),
+        );
+
+        group.bench_with_input(
             BenchmarkId::new("naive_iter", size),
             &size,
             distance_bench(naive_hamming_distance_iter),
+        );
+        group.bench_with_input(
+            BenchmarkId::new("naive_iter_64", size),
+            &size,
+            distance_bench(naive_hamming_distance_iter_64),
         );
 
         group.bench_with_input(
